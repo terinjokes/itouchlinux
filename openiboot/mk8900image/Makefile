@@ -7,10 +7,19 @@ CFLAGS += -m32
 	@echo "Compiling $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+all: mk8900image
+
 mk8900image:	$(MKIMAGEOBJS) $(LIBXPWN)
 	@echo "Building $@"
 	@$(CC) $(CFLAGS) $(MKIMAGEOBJS) $(LIBXPWN) $(LIBRARIES) -o $@
 
+libcommon.a:
+	@echo "Building $@"
+	@$gcc -c common/abstractfile.c -o common/abstractfile.c.o
+	@ar cr libcommon.a  common/abstractfile.c.o
+	@ranlib libcommon.a
+	
 clean:
 	@rm -f *.o
 	@rm -f mk8900image
+	@rm -f common/abstractfile.c.o libcommon.a
