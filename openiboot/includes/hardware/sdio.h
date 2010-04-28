@@ -33,6 +33,8 @@
 #define SDIO_NUMBLK	0x4C
 #define SDIO_REMBLK	0x50
 
+#ifndef CONFIG_IPOD
 #define SDIO_GPIO_DEVICE_RESET 0x607
+#endif
 
 #endif

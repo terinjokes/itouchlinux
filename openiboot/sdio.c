@@ -53,7 +53,9 @@ int sdio_setup()
 	clock_gate_switch(SDIO_CLOCKGATE, ON);
 
 	// SDCLK = PCLK/128 ~= 400 KHz
+#ifndef CONFIG_IPOD
 	SET_REG(SDIO + SDIO_CLKDIV, 1 << 7);
+#endif
 
 	// Reset FIFO
 	SET_REG(SDIO + SDIO_DCTRL, 0x3);
