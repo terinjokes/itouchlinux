@@ -3,7 +3,7 @@
 .SUFFIXES:	.c .s .o
 
 # Sources
-SRC_C               = accel.c actions.c aes.c arm.c buttons.c camera.c chipid.c clock.c commands.c dma.c event.c framebuffer.c ftl.c gpio.c i2c.c images.c interrupt.c lcd.c malloc.c miu.c mmu.c multitouch.c nand.c nor.c nvram.c openiboot.c pmu.c power.c printf.c radio.c sdio.c sha1.c spi.c tasks.c timer.c uart.c usb.c util.c wdt.c wlan.c wm8958.c
+SRC_C               = openiboot.c arm.c tasks.c mmu.c miu.c clock.c power.c uart.c interrupt.c timer.c event.c usb.c gpio.c util.c printf.c malloc.c dma.c nor.c aes.c spi.c chipid.c lcd.c i2c.c images.c sha1.c commands.c pmu.c buttons.c framebuffer.c actions.c nvram.c nand.c ftl.c accel.c sdio.c wdt.c wm8958.c multitouch.c wlan.c radio.c 
 SRC_S               = entry.s openiboot-asmhelpers.s
 
 HFS_SRC_C           = hfs/btree.c hfs/catalog.c hfs/extents.c hfs/fastunicodecompare.c hfs/rawfile.c hfs/utility.c hfs/volume.c hfs/bdev.c hfs/fs.c
@@ -16,6 +16,9 @@ else
 	SRC_C          += als.c
 endif
 
+SRC_C              += camera.c
+
+CFLAGS             += -Wall -Werror
 # Variables
 ifeq ($(SMALL),YES)
 	LOAD           ?= 0x22000000
@@ -28,10 +31,10 @@ endif
 ARCHFLAGS          += -mlittle-endian -mfpu=vfp -mthumb -mthumb-interwork
 LIBRARIES          += -lgcc -nostdlib
 INC                += -Iincludes
-CFLAGS             += -Wall -Werror
 LDFLAGS            += -Ttext=$(LOAD) --nostdlib
 VERSION             = "0.1"
 COMMIT              = $(shell git log | head -n1 | cut -b8-14)
+COMMIT             += $(shell date +%r)
 BUILD               = "$(COMMIT)"
 CFLAGS             += -DOPENIBOOT_VERSION=$(VERSION) -DOPENIBOOT_VERSION_BUILD=$(BUILD)
 DF                  = $(*F)
