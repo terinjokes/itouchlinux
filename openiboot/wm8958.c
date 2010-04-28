@@ -114,8 +114,13 @@ void audiohw_play_pcm(const void* addr_in, uint32_t size, int use_speaker)
 
 	if(use_speaker)
 	{
+#ifndef CONFIG_IPOD
 		i2sController = BB_I2S;
 		dma = DMA_BB_I2S_TX;
+#else
+		i2sController = WM_I2S;
+		dma = DMA_WM_I2S_TX;
+#endif
 	}
 	else
 	{

@@ -415,10 +415,17 @@ int sdio_reset()
 {
 	int ret;
 
+#ifndef CONFIG_IPOD
 	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 1);
 	udelay(5000);
 	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 0);
 	udelay(10000);
+#else
+	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 1);
+	udelay(5000);
+	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 0);
+	udelay(10000);
+#endif
 
 	ret = sdio_wait_for_ready(100);
 	if(ret)

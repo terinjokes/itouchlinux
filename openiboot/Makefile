@@ -58,6 +58,7 @@ endif
 
 ifeq ($(DEBUG),YES)
 	CFLAGS        += -DDEBUG
+	COMMIT		  += $(shell date +%r)
 endif
 
 # Tools
@@ -130,5 +131,5 @@ openiboot-payload.img2: openiboot-payload mk8900image/mk8900image
 
 #.PHONY: clean
 clean:
-	@rm -rf *.o $(DEPDIR) hfs/*.o openiboot openiboot.img2 openiboot-wtf.img2 openiboot.img3 openiboot-payload.bin openiboot-payload.img2
+	@rm -rf *.o $(DEPDIR) hfs/*.o openiboot openiboot.img2 openiboot-wtf.img2 openiboot.img3 openiboot-payload.bin openiboot-payload.img2 openiboot.bin
 	@cd mk8900image/; $(MAKE) clean
