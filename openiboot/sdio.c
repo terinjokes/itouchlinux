@@ -53,7 +53,9 @@ int sdio_setup()
 	clock_gate_switch(SDIO_CLOCKGATE, ON);
 
 	// SDCLK = PCLK/128 ~= 400 KHz
+//#ifndef CONFIG_IPOD
 	SET_REG(SDIO + SDIO_CLKDIV, 1 << 7);
+//#endif
 
 	// Reset FIFO
 	SET_REG(SDIO + SDIO_DCTRL, 0x3);
@@ -415,10 +417,17 @@ int sdio_reset()
 {
 	int ret;
 
+#ifndef CONFIG_IPOD
 	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 1);
 	udelay(5000);
 	gpio_pin_output(SDIO_GPIO_DEVICE_RESET, 0);
 	udelay(10000);
+#else
+	gpio_pin_output(SDIO_GPIO_POWER, 0);
+	udelay(5000);
+	gpio_pin_output(SDIO_GPIO_POWER, 1);
+	udelay(10000);
+#endif
 
 	ret = sdio_wait_for_ready(100);
 	if(ret)

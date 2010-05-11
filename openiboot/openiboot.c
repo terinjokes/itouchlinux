@@ -87,8 +87,9 @@ void OpenIBootStart() {
 #endif
 
 	startUSB();
-
+#ifndef CONFIG_IPOD
 	radio_setup();
+#endif
 	sdio_setup();
 	wlan_setup();
 	accel_setup();
@@ -406,8 +407,10 @@ static int setup_openiboot() {
 	framebuffer_setup();
 
 	audiohw_init();
-
+	
+#ifndef CONFIG_IPOD
 	camera_setup();
+#endif
 
 	return 0;
 }

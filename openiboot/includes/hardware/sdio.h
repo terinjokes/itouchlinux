@@ -9,7 +9,7 @@
 #ifdef CONFIG_IPOD
 #define SDIO_GPIO_POWER 0x1701
 #else
-#define SDIO_GPIO_POWER 0x607
+#define SDIO_GPIO_RESET 0x607
 #endif
 
 #define SDIO_CTRL	0x0
@@ -32,7 +32,5 @@
 #define SDIO_BLKLEN	0x48
 #define SDIO_NUMBLK	0x4C
 #define SDIO_REMBLK	0x50
-
-#define SDIO_GPIO_DEVICE_RESET 0x607
 
 #endif
